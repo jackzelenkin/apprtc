@@ -72,6 +72,7 @@ function setupLoopback(wssUrl, roomId) {
       // https://bugs.chromium.org/p/chromium/issues/detail?id=616263
       // https://bugs.chromium.org/p/chromium/issues/detail?id=1077740
       loopbackAnswer = loopbackAnswer
+          .replace(/a=crypto:[1-9]+ .*?\\r\\n/g, '')
           .replace(/a=crypto:[1-9]+ .*/g, '');
       sendLoopbackMessage(JSON.parse(loopbackAnswer));
     } else if (message.type === 'candidate') {
@@ -80,7 +81,7 @@ function setupLoopback(wssUrl, roomId) {
   };
 
   loopbackWebSocket.onclose = function(event) {
-    trace('Loopback WebSocket closed with code:' + event.code + ' reason:' +
+*    trace('Loopback WebSocket closed with code:' + event.code + ' reason:' +
           event.reason);
   };
 }
